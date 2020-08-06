@@ -1,7 +1,6 @@
-// todo: добавить автодобавление меня во все списки
+"use strict";
 
-// let rating = new function () { // нужен this или (  func(){}  )()
-let table = document.getElementsByClassName("namesTable")[0].lastElementChild;//.children;
+let table = document.getElementsByClassName("namesTable")[0].lastElementChild;
 
 function load() {
     let students = [];
@@ -24,7 +23,7 @@ function clean() {
 function cleanAndAppend(predicate) {
     clean();
 
-    newNum = 1;
+    let newNum = 1;
     for (const student of students) {
         if (predicate(student)) {
             student.getElementsByClassName("num")[0].textContent = String(newNum++);
@@ -47,14 +46,13 @@ function printAccepted() {
     cleanAndAppend(student => student.getElementsByClassName("accepted")[0].textContent == "да");
     console.log('accepted');
 }
-// };
 
 function init() {
     let buttons = {
         all: document.createElement("button"),
         notToAnother: document.createElement("button"),
         accepted: document.createElement("button"),
-    }
+    };
 
     buttons.all.textContent = "Все";
     buttons.all.setAttribute('onclick', 'printAll();');
@@ -70,6 +68,8 @@ function init() {
     for (const button in buttons) {
         document.getElementById('filter').appendChild(buttons[button]);
     }
+    console.log('init complite');
+    alert('init complite');
 }
 
 init();
