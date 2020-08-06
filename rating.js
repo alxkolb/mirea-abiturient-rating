@@ -1,4 +1,4 @@
-// todo: добавить кнопки и автодобавление меня во все списки
+// todo: добавить автодобавление меня во все списки
 
 // let rating = new function () { // нужен this или (  func(){}  )()
 let table = document.getElementsByClassName("namesTable")[0].lastElementChild;//.children;
@@ -33,17 +33,17 @@ function cleanAndAppend(predicate) {
     }
 }
 
-function all() {
+function printAll() {
     cleanAndAppend(student => true);
     console.log('all');
 }
 
-function notToAnother() {
+function printNotToAnother() {
     cleanAndAppend(student => student.getElementsByClassName("status")[0].textContent != "Согласие на др. конкурсе");
     console.log('notToAnother');
 }
 
-function accepted() {
+function printAccepted() {
     cleanAndAppend(student => student.getElementsByClassName("accepted")[0].textContent == "да");
     console.log('accepted');
 }
@@ -57,13 +57,13 @@ function init() {
     }
 
     buttons.all.textContent = "Все";
-    buttons.all.setAttribute('onclick', 'all();');
+    buttons.all.setAttribute('onclick', 'printAll();');
 
     buttons.notToAnother.textContent = "Сюда и не определевшиеся";
-    buttons.notToAnother.setAttribute('onclick', 'notToAnother();');
+    buttons.notToAnother.setAttribute('onclick', 'printNotToAnother();');
 
     buttons.accepted.textContent = "С согласием на зачисление";
-    buttons.accepted.setAttribute('onclick', 'accepted();');
+    buttons.accepted.setAttribute('onclick', 'printAccepted();');
 
     document.getElementById('filter').appendChild(document.createElement('br'));
 
