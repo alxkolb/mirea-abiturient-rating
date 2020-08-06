@@ -63,13 +63,14 @@ function init() {
     buttons.accepted.textContent = "С согласием на зачисление";
     buttons.accepted.setAttribute('onclick', 'printAccepted();');
 
-    document.getElementById('filter').appendChild(document.createElement('br'));
+    for (let i = 0; i < 3; i++) {
+        document.getElementById('filter').appendChild(document.createElement('br'));
+    }
 
     for (const button in buttons) {
         document.getElementById('filter').appendChild(buttons[button]);
     }
     console.log('init complite');
-    alert('init complite');
 }
 
 init();
