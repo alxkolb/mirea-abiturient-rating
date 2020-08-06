@@ -21,7 +21,7 @@ function clean() {
     }
 }
 
-function append(predicate) {
+function cleanAndAppend(predicate) {
     clean();
 
     newNum = 1;
@@ -34,14 +34,42 @@ function append(predicate) {
 }
 
 function all() {
-    append(student => true);
+    cleanAndAppend(student => true);
+    console.log('all');
 }
 
 function notToAnother() {
-    append(student => student.getElementsByClassName("status")[0].textContent != "Согласие на др. конкурсе");
+    cleanAndAppend(student => student.getElementsByClassName("status")[0].textContent != "Согласие на др. конкурсе");
+    console.log('notToAnother');
 }
 
 function accepted() {
-    append(student => student.getElementsByClassName("accepted")[0].textContent == "да");
+    cleanAndAppend(student => student.getElementsByClassName("accepted")[0].textContent == "да");
+    console.log('accepted');
 }
 // };
+
+function init() {
+    let buttons = {
+        all: document.createElement("button"),
+        notToAnother: document.createElement("button"),
+        accepted: document.createElement("button"),
+    }
+
+    buttons.all.textContent = "Все";
+    buttons.all.setAttribute('onclick', 'all();');
+
+    buttons.notToAnother.textContent = "Сюда и не определевшиеся";
+    buttons.notToAnother.setAttribute('onclick', 'notToAnother();');
+
+    buttons.accepted.textContent = "С согласием на зачисление";
+    buttons.accepted.setAttribute('onclick', 'accepted();');
+
+    document.getElementById('filter').appendChild(document.createElement('br'));
+
+    for (const button in buttons) {
+        document.getElementById('filter').appendChild(buttons[button]);
+    }
+}
+
+init();
