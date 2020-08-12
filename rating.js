@@ -63,7 +63,7 @@ function init() {
     buttons.all.textContent = "Все";
     buttons.all.setAttribute('onclick', 'printAll();');
 
-    buttons.notToAnother.textContent = "Сюда и не определевшиеся";
+    buttons.notToAnother.textContent = "Сюда и неопределевшиеся";
     buttons.notToAnother.setAttribute('onclick', 'printNotToAnother();');
 
     buttons.accepted.textContent = "С согласием на зачисление";
