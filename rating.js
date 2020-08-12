@@ -47,11 +47,17 @@ function printAccepted() {
     console.log('accepted');
 }
 
+function enrolled() {
+    cleanAndAppend(abiturient => abiturient.getElementsByClassName("status")[0].textContent == "Рассматривается к зачислению");
+    console.log('enrolled');
+}
+
 function init() {
     const buttons = {
         all: document.createElement("button"),
         notToAnother: document.createElement("button"),
         accepted: document.createElement("button"),
+        enrolled: document.createElement("button"),
     };
 
     buttons.all.textContent = "Все";
@@ -62,6 +68,9 @@ function init() {
 
     buttons.accepted.textContent = "С согласием на зачисление";
     buttons.accepted.setAttribute('onclick', 'printAccepted();');
+
+    buttons.enrolled.textContent = "Рассматриваются к зачислению";
+    buttons.enrolled.setAttribute('onclick', 'enrolled();');
 
     for (let i = 0; i < 3; i++) {
         document.getElementById('filter').appendChild(document.createElement('br'));
