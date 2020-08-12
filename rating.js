@@ -3,16 +3,16 @@
 const table = document.getElementsByClassName("namesTable")[0].lastElementChild;
 
 function load() {
-    const students = [];
+    const abiturients = [];
 
     for (let i = 0; i < table.children.length; i++) {
-        students.push(table.children[i]);
+        abiturients.push(table.children[i]);
     }
 
-    return students;
+    return abiturients;
 }
 
-const students = load();
+const abiturients = load();
 
 function clean() {
     while (table.childElementCount > 0) {
@@ -24,26 +24,26 @@ function cleanAndAppend(predicate) {
     clean();
 
     let newNum = 1;
-    for (const student of students) {
-        if (predicate(student)) {
-            student.getElementsByClassName("num")[0].textContent = String(newNum++);
-            table.appendChild(student);
+    for (const abiturient of abiturients) {
+        if (predicate(abiturient)) {
+            abiturient.getElementsByClassName("num")[0].textContent = String(newNum++);
+            table.appendChild(abiturient);
         }
     }
 }
 
 function printAll() {
-    cleanAndAppend(student => true);
+    cleanAndAppend(abiturient => true);
     console.log('all');
 }
 
 function printNotToAnother() {
-    cleanAndAppend(student => student.getElementsByClassName("status")[0].textContent != "Согласие на др. конкурсе");
+    cleanAndAppend(abiturient => abiturient.getElementsByClassName("status")[0].textContent != "Согласие на др. конкурсе");
     console.log('notToAnother');
 }
 
 function printAccepted() {
-    cleanAndAppend(student => student.getElementsByClassName("accepted")[0].textContent == "да");
+    cleanAndAppend(abiturient => abiturient.getElementsByClassName("accepted")[0].textContent == "да");
     console.log('accepted');
 }
 
