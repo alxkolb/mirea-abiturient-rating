@@ -2,91 +2,76 @@
  * Copyright © 2020 Александр Колбасов
  */
 
-"use strict";
+'use strict';
 
-const table = document.getElementsByClassName("namesTable")[0].lastElementChild;
+const rating = (
+    () => {
 
-function load() {
-    const abiturients = [];
+        const table = document.getElementsByClassName('namesTable')[0].lastElementChild;  /* <tbody> */
 
-    for (let i = 0; i < table.children.length; i++) {
-        abiturients.push(table.children[i]);
-    }
-
-    return abiturients;
-}
-
-const abiturients = load();
-
-function clean() {
-    while (table.childElementCount > 0) {
-        table.firstChild.remove();
-    }
-}
-
-function cleanAndAppend(predicate) {
-    clean();
-
-    let newNum = 1;
-    for (const abiturient of abiturients) {
-        if (predicate(abiturient)) {
-            abiturient.getElementsByClassName("num")[0].textContent = String(newNum++);
-            table.appendChild(abiturient);
+        const abiturients = [];
+        /* Преобразуем NodeList в массив */
+        for (let child of table.children) {
+            abiturients.push(child);
         }
+
+        function clean() {
+            while (table.childElementCount > 0) {
+                table.firstChild.remove();
+            }
+        }
+
+        function append(filterFunction) {
+            let newNum = 1;
+            for (let abiturient of abiturients) {
+                if (filterFunction(abiturient)) {
+                    abiturient.getElementsByClassName('num')[0].textContent = String(newNum++);
+                    table.appendChild(abiturient);
+                }
+            }
+        }
+
+        function filter(filterFunction, name) {
+            clean();
+            append(filterFunction);
+            console.info(name);
+        }
+
+        function createButton(buttonName, filterFunction) {
+            let button = document.createElement('button');
+            button.textContent = buttonName;
+            button.onclick = (event) => filter(filterFunction, buttonName);
+
+            document.getElementById('filter').appendChild(button);
+        }
+
+        /* Отступ перед кнопками */
+        for (let i = 0; i < 3; i++) {
+            document.getElementById('filter').appendChild(document.createElement('br'));
+        }
+
+        return { createButton, filter };
     }
-}
+)();
 
-function printAll() {
-    cleanAndAppend(abiturient => true);
-    console.log('all');
-}
-
-function printNotToAnother() {
-    cleanAndAppend(abiturient => abiturient.getElementsByClassName("status")[0].textContent != "Согласие на др. конкурсе");
-    console.log('notToAnother');
-}
-
-function printAccepted() {
-    cleanAndAppend(abiturient => abiturient.getElementsByClassName("accepted")[0].textContent == "да");
-    console.log('accepted');
-}
-
-function enrolled() {
-    cleanAndAppend(abiturient => {
-        const status = abiturient.getElementsByClassName("status")[0].textContent;
-        return status == "Рассматривается к зачислению" || status == "В приказе";
-    });
-    console.log('enrolled');
-}
-
-function init() {
-    const buttons = {
-        all: document.createElement("button"),
-        notToAnother: document.createElement("button"),
-        accepted: document.createElement("button"),
-        enrolled: document.createElement("button"),
-    };
-
-    buttons.all.textContent = "Все";
-    buttons.all.setAttribute('onclick', 'printAll();');
-
-    buttons.notToAnother.textContent = "Сюда и неопределевшиеся";
-    buttons.notToAnother.setAttribute('onclick', 'printNotToAnother();');
-
-    buttons.accepted.textContent = "С согласием на зачисление";
-    buttons.accepted.setAttribute('onclick', 'printAccepted();');
-
-    buttons.enrolled.textContent = "Рассматриваются к зачислению";
-    buttons.enrolled.setAttribute('onclick', 'enrolled();');
-
-    for (let i = 0; i < 3; i++) {
-        document.getElementById('filter').appendChild(document.createElement('br'));
-    }
-
-    for (const button in buttons) {
-        document.getElementById('filter').appendChild(buttons[button]);
-    }
-    console.log('init complite');
-}
-
-init();
+{
+    rating.createButton(
+        'Все',
+        abiturient => true
+    );
+    rating.createButton(
+        'Сюда и неопределевшиеся',
+        abiturient => abiturient.getElementsByClassName('status')[0].textContent != 'Согласие на др. конкурсе'
+    );
+    rating.createButton(
+        'С согласием на зачисление',
+        abiturient => abiturient.getElementsByClassName('accepted')[0].textContent == 'да'
+    );
+    rating.createButton(
+        'Рассматриваются к зачислению',
+        abiturient => {
+            let status = abiturient.getElementsByClassName('status')[0].textContent;
+            return status == 'Рассматривается к зачислению' || status == 'В приказе';
+        }
+    );
+};
