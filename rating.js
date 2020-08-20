@@ -1,3 +1,7 @@
+/*
+ * Copyright © 2020 Александр Колбасов
+ */
+
 "use strict";
 
 const table = document.getElementsByClassName("namesTable")[0].lastElementChild;
