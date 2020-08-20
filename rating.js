@@ -48,7 +48,10 @@ function printAccepted() {
 }
 
 function enrolled() {
-    cleanAndAppend(abiturient => abiturient.getElementsByClassName("status")[0].textContent == "Рассматривается к зачислению");
+    cleanAndAppend(abiturient => {
+        const status = abiturient.getElementsByClassName("status")[0].textContent;
+        return status == "Рассматривается к зачислению" || status == "В приказе";
+    });
     console.log('enrolled');
 }
 
